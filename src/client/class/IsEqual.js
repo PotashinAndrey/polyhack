@@ -1,4 +1,6 @@
 export default function isEqual(object1, object2) {
+  if(!object1 || !object2) return false;
+
   const props1 = Object.getOwnPropertyNames(object1);
   const props2 = Object.getOwnPropertyNames(object2);
 
