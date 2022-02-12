@@ -24,7 +24,7 @@ import fs from 'fs';
       const api = new Koa();
       api.use(bodyParser());
       api.use(async (ctx, next) => {
-        const path = 'https://' + this.config.proxy + '/api' + ctx.path;
+        const path = 'http://localhost:3030' + ctx.path;
         const method = ctx.method.toLowerCase();
         const isJSON = ctx.headers['content-type']?.toLowerCase() === 'application/json';
         const body = method === 'get' || !isJSON ? new URLSearchParams(ctx.request.body).toString() || ctx.request.querystring : JSON.stringify(ctx.request.body);

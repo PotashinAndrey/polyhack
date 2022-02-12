@@ -56,7 +56,7 @@ main();
     const getInfo = async () => {
       const id = 1;
 
-      const response = await fetch(`http://localhost:3030/person?id=${id}`, {
+      const response = await fetch(`/api/person?id=${id}`, {
         method: "GET",
         body: null,
         headers: {}
@@ -64,11 +64,13 @@ main();
 
       const data = await response.json();
 
+      console.log(data);
+
       if (!response.ok) throw new Error(data.message || 'something went wrong in request');
 
       const person = data.data;
 
-      if (locator.storage.get("personInfo")) return;
+      if (locator.storage.get("personInfo") || !person) return;
       locator.storage.set("personInfo", person);
     }
 

@@ -50,14 +50,14 @@ export default class PageProfile extends Component {
         <slot></slot>
         <img class="myAvatar" src="../images/Steve_Jobs.jpg">
         <div id="name" class="nameProfile">UserName</div>
-        <div id="status" class="statusProfile">Good guy</div>
+        <div id="status" class="statusProfile">Status</div>
         <div class="donationsProfile">
           <p>Donated:</p>
-          <p id="donated" >1630</p>
+          <p id="donated" >0</p>
         </div>
         <div class="stickersProfile">
           <p>Stickers count:</p>
-          <p id="count">5</p>
+          <p id="count">0</p>
         </div>
       </template>`;
 
@@ -86,14 +86,14 @@ export default class PageProfile extends Component {
 
       name.innerHTML = `${info.firstName} ${info.lastName}`;
       status.innerHTML = `${info.status}`;
-      donated.innerHTML = `${info.donated}`;
-      count.innerHTML = `${info.stickers.length}`;
+      donated.innerHTML = `${info.donated} $`;
+      count.innerHTML = `${info.count}`;
     }
 
     const setInfo = async () => {
       const person = locator.storage.get("personInfo");
 
-      console.log(person);
+      if (!person) return;
 
       setPersonValues(person);
     }
