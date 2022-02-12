@@ -1,0 +1,17 @@
+{
+  "lang": "ru-RU",
+  "name": "Kiski | lambda 2",
+  "short_name": "Kiski",
+  "description": "lambda 2",
+  "start_url": "/",
+  "background_color": "white",
+  "theme_color": "white",
+  "orientation": "any",
+  "display": "standalone",
+  "icons": [
+      {
+          "src": "/favicon.png",
+          "sizes": "512x512"
+      }
+  ]
+}

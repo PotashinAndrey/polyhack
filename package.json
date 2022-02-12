@@ -1,0 +1,24 @@
+{
+  "name": "bell-hack",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --experimental-json-modules ./index.js",
+    "lint": "./node_modules/eslint/bin/eslint.js .",
+    "clear": "rm -rf node_modules package-lock.json",
+    "debug": "node --experimental-json-modules --nolazy --inspect-brk=9229 index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0",
+    "koa-mount": "^4.0.0",
+    "koa-router": "^10.1.1",
+    "koa-static": "^5.0.0",
+    "node-fetch": "^3.1.0"
+  }
+}
