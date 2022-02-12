@@ -66,7 +66,7 @@ export default class StickerListItem extends Component {
     const stickerComponent = new AppSticker(sticker);
 
     $('#stickerBody', node).addEventListener("click", (e) => {
-      console.log(e);
+      console.log("item", e);
       locator.channel.send('drawer-open', {
         page: new StickerCard(sticker),
         params: {

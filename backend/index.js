@@ -48,34 +48,30 @@ router.get('friends', '/friends', (context) => {
   const person = persons.find(e => e.id === query.id);
   const personsFriends = person.friends;
 
-  console.log(personsFriends);
-
       const friends = persons.filter(e => {
         const isFriend = personsFriends.includes(+e.id);
         return isFriend;
       });
-  console.log(friends);
 
   context.body = {
     data: friends
   }
 })
 
-router.get('data', '/data', (context) => {
+router.get('sticker', '/sticker', (context) => {
+  const query = context.query;
+
+  const friendsWithSameSticker = persons.filter(e => {
+    const isSticker = e.stickers.includes(+query.sticker);
+    return isSticker;
+  });
+
+  console.log(friendsWithSameSticker);
+
   context.body = {
-    data: staticData
-  };
-})
-
-router.post('save', '/save', (context) => {
-  context.status = 200;
-  context.body = { data: 1 }
-
-  console.log(context.request.body);
-  staticData.push(...context.request.body.data);
-
-  console.log(staticData);
-})
+    data: friendsWithSameSticker
+  }
+});
 
 app
   .use(router.routes())
