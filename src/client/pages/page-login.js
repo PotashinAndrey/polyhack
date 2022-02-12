@@ -1,5 +1,5 @@
 import Component, { html, css } from '../class/Component.js';
-import $, { updateChildrenText } from '../class/DOM.js';
+import Get, { updateChildrenText } from '../class/DOM.js';
 import Api from '../class/Api.js';
 import locator from '../script/locator.js';
 
@@ -57,8 +57,8 @@ export default class PageLogin extends Component {
           <input class="inputPVP" name="login" value="potashin@ro.ru" placeholder="Введите Ваш email" />
           <input class="inputPVP" name="password" value="Qwerty12" placeholder="Введите Ваш пароль" />
 
-          <app-button primary id="button-login">Procede</app-button>
-          <app-logo></app-logo>
+          <app-button primary id="button-login">Login</app-button>
+          <app-button primary id="button-login-facebook">Login via facebook</app-button>
         </div>
       </template>`;
 
@@ -73,23 +73,37 @@ export default class PageLogin extends Component {
   mount(node) {
     super.mount(node, attributes, properties);
 
-    const submitButton = $('#button-login', node);
-    submitButton.addEventListener('click', async () => {
-      try {
-        const banner = $('app-banner', node);
-        if (banner) banner.remove();
-
-        const username = $('input[name="login"]', node).value;
-        const password = $('input[name="password"]', node).value;
-        // const auth = await Api.post('/authorization/oauth/token', { username, password, grant_type: 'password' }, false);
-        // console.log(auth);
-        locator.go('main');
-      } catch(e) {
-        node.appendChild(AppBanner.error(e.message || e.error_description));
-      }
+    $(node).ready(function() {
+      $.ajaxSetup({ cache: true });
+      $.getScript('https://connect.facebook.net/en_US/sdk.js', function(){
+        FB.init({
+          appId: '460541079084054',
+          version: 'v2.7'
+        });
+        // FB.getLoginStatus((e) => {console.log(e);});
+      });
     });
 
-    const gotoRegistrationButton = $('#gotoRegister', node);
+    const facebookLoginBtn = Get('#button-login-facebook', node);
+    facebookLoginBtn.addEventListener('click', async () => {
+      FB.getLoginStatus((statusResponse) => {
+        if (statusResponse.status === 'connected') {
+          locator.go('main');
+          return;
+        }
+        FB.login((loginResponse) => {
+          if (loginResponse.status === 'connected') {
+            console.log(loginResponse, 'success');
+            locator.storage.set('authData', loginResponse.authResponse);
+            locator.go('main');
+          } else {
+            console.log(loginResponse, 'error');
+          }
+        }, {scope: 'public_profile,user_friends'});
+      });
+    });
+
+    const gotoRegistrationButton = Get('#gotoRegister', node);
     gotoRegistrationButton.addEventListener('click', async () => {
       locator.go('register');
     });

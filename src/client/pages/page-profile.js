@@ -59,6 +59,7 @@ export default class PageProfile extends Component {
           <p>Stickers count:</p>
           <p id="count">0</p>
         </div>
+        <app-button primary id="buttonLogout">Logout</app-button>
       </template>`;
 
   // /** Создание компонента {PageProfile} @constructor
@@ -97,6 +98,21 @@ export default class PageProfile extends Component {
 
       setPersonValues(person);
     }
+    const facebookLogoutBtn = $('#buttonLogout', node);
+    facebookLogoutBtn.addEventListener('click', () => {
+      FB.getLoginStatus((loginResponse) => {
+        if (loginResponse.status === 'connected') {
+          FB.logout((logoutResponse) => {
+            if (logoutResponse.status === 'unknown' || logoutResponse.status === 'not_authorized') {
+              // Выход из учетки фейсбука
+              locator.go('login');
+              return;
+            }
+          });
+        }
+      });
+      locator.go('login');
+    });
 
     // @ts-ignore
     // if (window.VK) {
