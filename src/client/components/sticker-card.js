@@ -112,9 +112,11 @@ const style = css`
         sameSticker.classList.add("sameStickerBlock");
         node.appendChild(sameSticker);
 
+        const donatedAmount = locator.storage.get('personInfo');
+
         const progressIndicator = new Progress({
-          amount: 1630,
-          aim: 5000
+          amount: donatedAmount.donated,
+          aim: 70
         });
         progressIndicator.classList.add("counter");
         node.appendChild(progressIndicator);

@@ -355,9 +355,11 @@ export default class PageDonate extends Component {
       $('#sticker', node).appendChild(sticker);
     });
 
+    const donatedAmount = locator.storage.get('personInfo');
+
     const progressIndicator = new Progress({
-      amount: 1630,
-      aim: 5000
+      amount: donatedAmount.donated,
+      aim: 70
     });
     progressIndicator.classList.add("counter");
     node.appendChild(progressIndicator);
