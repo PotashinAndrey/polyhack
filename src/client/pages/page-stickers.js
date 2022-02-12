@@ -5,7 +5,7 @@ import $ from '../class/DOM.js';
 const attributes = {};
 const properties = {};
 
-const stickersArray = ["3-58164", "3-58150", "3-58138", "3-58140"];
+const stickersArray = ["s6", "s5", "s1", "s3"];
 
 const style = css`
   :host {

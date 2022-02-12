@@ -44,7 +44,7 @@ const style = css`
       const camera = $('app-camera', node);
       const goDonation = e => {
         camera.removeEventListener('click', goDonation);
-        setTimeout(() => locator.go(`main/donate/3-58164`), 1000);
+        setTimeout(() => locator.go(`main/donate/s6`), 1000);
         // setTimeout(() => locator.go(`main/donate/${this.getSticker()}`), 1000);
       }
       camera.addEventListener('qr-code', goDonation);
@@ -58,7 +58,7 @@ const style = css`
     }
 
     getSticker() {
-      const stickersArray = ["3-58164", "3-58150", "3-58145", "3-58138", "3-58140"];
+      const stickersArray = ["s6", "s5", "s4", "s1", "s3"];
       return stickersArray[this.getRandomInRange(0, stickersArray.length)];
     }
 

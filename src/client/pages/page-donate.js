@@ -347,7 +347,7 @@ export default class PageDonate extends Component {
       const location = e?.detail?.options?.location || [];
       console.log('route', location);
       this.isStickerPaused = true;
-      this.stickerId = location[1] || "3-58164";
+      this.stickerId = location[1] || "s6";
       const sticker = new AppSticker({
         id: this.stickerId,
         paused: this.isStickerPaused

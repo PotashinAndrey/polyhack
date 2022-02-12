@@ -20,28 +20,28 @@ const style = css`
   }`;
 
 const allStickers = {
-  "3-58164": {
-    stickerPath: '/stickers/3-58164.json',
+  "s6": {
+    stickerPath: '/stickers/s5.json',
     name: "кошкодевочка"
   },
-  "3-58150": {
-    stickerPath: '/stickers/3-58150.json',
+  "s5": {
+    stickerPath: '/stickers/s5.json',
     name: "кошкодевочка 2"
   },
-  "3-58145": {
-    stickerPath: '/stickers/3-58145.json',
+  "s4": {
+    stickerPath: '/stickers/s4.json',
     name: "кошкодевочка 3"
   },
-  "3-58138": {
-    stickerPath: '/stickers/3-58138.json',
+  "s1": {
+    stickerPath: '/stickers/s1.json',
     name: "кошкодевочка 4"
   },
-  "3-58139": {
-    stickerPath: '/stickers/3-58139.json',
+  "s2": {
+    stickerPath: '/stickers/s2.json',
     name: "кошкодевочка 5"
   },
-  "3-58140": {
-    stickerPath: '/stickers/3-58140.json',
+  "s3": {
+    stickerPath: '/stickers/s3.json',
     name: "кошкодевочка 6"
   }
 };

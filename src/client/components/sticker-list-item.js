@@ -8,12 +8,12 @@ const attributes = {};
 const properties = {};
 
 const stickersName = {
-  "3-58138": "Kitty eyes",
-  "3-58139": "Kitty drink",
-  "3-58140": "Kitty lick",
-  "3-58145": "Kitty mrrr",
-  "3-58150": "Kitty dance",
-  "3-58164": "Kitty"
+  "s1": "Kitty eyes",
+  "s2": "Kitty drink",
+  "s3": "Kitty lick",
+  "s4": "Kitty mrrr",
+  "s5": "Kitty dance",
+  "s6": "Kitty"
 }
 
 const style = css`

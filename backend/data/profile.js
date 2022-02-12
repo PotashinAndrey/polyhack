@@ -6,8 +6,8 @@ const persons = [
     avatar: "Steve_Jobs.jpg",
     status: "Good guy",
     donated: 310,
-    stickers: [1, 2, 3, 4, 5],
-    count: 5,
+    stickers: [2, 3, 4, 5],
+    count: 4,
     friends: [2, 3, 4, 5, 6]
   },
   {
@@ -66,5 +66,6 @@ const persons = [
     friends: [2, 3, 4]
   },
 ];
+
 
 module.exports = persons;

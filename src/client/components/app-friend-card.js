@@ -6,7 +6,7 @@ import AppDrawer from './app-drawer.js';
 const attributes = {};
 const properties = {};
 
-const stickersArray = ["3-58164", "3-58150", "3-58145", "3-58138", "3-58139", "3-58140"];
+const stickersArray = ["s6", "s5", "s4", "s1", "s2", "s3"];
 
 const badges = {
   'Good guy': '#E0CA00',
@@ -137,7 +137,7 @@ const style = css`
     }
 
     getMyStickers() {
-      return ["3-58164", "3-58150", "3-58138", "3-58140"];
+      return ["s6", "s5", "s4", "s3"];
     }
 
     getRandomInRange(min, max) {
