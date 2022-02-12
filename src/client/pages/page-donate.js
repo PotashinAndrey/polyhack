@@ -296,11 +296,11 @@ export default class PageDonate extends Component {
           }
         </style>
         <div id="infoWrapper">
-          <div id="title">Фильтры для аппаратов ИВЛ</div>
+          <div id="title">Donate to Banff national park</div>
           <slot></slot>
           <div id="sticker"></div>
-          <div id="price">199 р.</div>
-          <div id="description">Помогите собрать средства и получите в награду анимированную кошечку!</div>
+          <div id="price">20$</div>
+          <div id="description">Help us to raise money and get an animated cat as a gift!</div>
         </div>
         <div id="payments">
           <apple-pay-button buttonstyle="black" type="plain" locale="en"></apple-pay-button>
@@ -393,7 +393,7 @@ async function onApplePayButtonClicked() {
           "masterCard",
           "visa"
         ],
-        "countryCode": "RU"
+        "countryCode": "CA"
       }
     }];
 
@@ -402,8 +402,8 @@ async function onApplePayButtonClicked() {
       "total": {
         "label": "My Merchant",
         "amount": {
-          "value": "199",
-          "currency": "RUB"
+          "value": "20",
+          "currency": "USD"
         }
       }
     };
@@ -464,8 +464,8 @@ async function onApplePayButtonClicked() {
         "total": {
           "label": "My Merchant",
           "amount": {
-            "value": "199",
-            "currency": "RUB"
+            "value": "20",
+            "currency": "USD"
           }
         }
       };
