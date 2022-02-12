@@ -27,6 +27,10 @@ import Locator from '../class/Locator.js';
     get go() {
       return this.get('go');
     }
+
+    get storage() {
+      return this.get('storage');
+    }
   }
 
 /** @section @export */

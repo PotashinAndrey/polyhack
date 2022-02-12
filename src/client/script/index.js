@@ -1,6 +1,7 @@
 import locator from './locator.js';
 import Channel from '../class/Browser.js';
 import Router from '../class/Router.js';
+import Storage from '../class/Storage.js';
 
 import PageRegistration from "../pages/page-registation.js";
 import PageLogin from "../pages/page-login.js";
@@ -35,6 +36,7 @@ main();
     const router = routing();
 
     locator.services = {
+      storage: new Storage(),
       channel,
       router,
       go: (path) => {
@@ -50,6 +52,27 @@ main();
       const path = window.location.hash.replace(/^#/, '').split('/');
       channel.send('app-routing', path);
     }).start();
+
+    const getInfo = async () => {
+      const id = 1;
+
+      const response = await fetch(`http://localhost:3030/person?id=${id}`, {
+        method: "GET",
+        body: null,
+        headers: {}
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.message || 'something went wrong in request');
+
+      const person = data.data;
+
+      if (locator.storage.get("personInfo")) return;
+      locator.storage.set("personInfo", person);
+    }
+
+    getInfo();
   }
 
 // #region [Private]

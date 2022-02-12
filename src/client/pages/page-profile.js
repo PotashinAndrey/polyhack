@@ -1,4 +1,5 @@
 import Component, { html, css } from '../class/Component.js';
+import locator from '../script/locator.js';
 import $ from '../class/DOM.js';
 import Progress from '../components/progress-indicator.js';
 import AppButton from '../components/app-button.js';
@@ -39,22 +40,24 @@ const style = css`
 /** Profile {PageProfile} @class @ui @component <page-profile />
   * description
   */
+
+// <app-button secondary wide id="vk_auth">Login via Facebook</app-button>
+
 export default class PageProfile extends Component {
   static template = html`
       <template>
         <style>${style}</style>
         <slot></slot>
         <img class="myAvatar" src="../images/Steve_Jobs.jpg">
-        <div class="nameProfile">Стив Джобс</div>
-        <app-button secondary wide id="vk_auth">Login via Facebook</app-button>
-        <div class="statusProfile">Good guy</div>
+        <div id="name" class="nameProfile">UserName</div>
+        <div id="status" class="statusProfile">Good guy</div>
         <div class="donationsProfile">
           <p>Donated:</p>
-          <p>1630</p>
+          <p id="donated" >1630</p>
         </div>
         <div class="stickersProfile">
           <p>Stickers count:</p>
-          <p>5</p>
+          <p id="count">5</p>
         </div>
       </template>`;
 
@@ -75,30 +78,51 @@ export default class PageProfile extends Component {
 
     const { store } = this.store();
 
-    // @ts-ignore
-    if (window.VK) {
-      const vk_auth = $('#vk_auth', node);
-      VK.init({ apiId: 1914120 });
-      // @ts-ignore
-      // VK.Widgets.Auth(vk_auth, {
-      //   onAuth: function(data) {
-      //     alert('user '+data['uid']+' authorized');
-      //   }
-      // });
-      vk_auth.addEventListener('click', () => VK.Auth.login(function(response) {
-        if (response.session) {
-          /* Пользователь успешно авторизовался */
-          console.log(response);
-          alert('user '+response.session['uid']+' authorized');
-          if (response.settings) {
-            /* Выбранные настройки доступа пользователя, если они были запрошены */
-          }
-        } else {
-          /* Пользователь нажал кнопку Отмена в окне авторизации */
-        }
-      }));
+    const setPersonValues = (info) => {
+      const name = node.getElementById("name");
+      const status = node.getElementById("status");
+      const donated = node.getElementById("donated");
+      const count = node.getElementById("count");
+
+      name.innerHTML = `${info.firstName} ${info.lastName}`;
+      status.innerHTML = `${info.status}`;
+      donated.innerHTML = `${info.donated}`;
+      count.innerHTML = `${info.stickers.length}`;
     }
 
+    const setInfo = async () => {
+      const person = locator.storage.get("personInfo");
+
+      console.log(person);
+
+      setPersonValues(person);
+    }
+
+    // @ts-ignore
+    // if (window.VK) {
+    //   const vk_auth = $('#vk_auth', node);
+    //   VK.init({ apiId: 1914120 });
+    //   // @ts-ignore
+    //   // VK.Widgets.Auth(vk_auth, {
+    //   //   onAuth: function(data) {
+    //   //     alert('user '+data['uid']+' authorized');
+    //   //   }
+    //   // });
+    //   vk_auth.addEventListener('click', () => VK.Auth.login(function (response) {
+    //     if (response.session) {
+    //       /* Пользователь успешно авторизовался */
+    //       console.log(response);
+    //       alert('user ' + response.session['uid'] + ' authorized');
+    //       if (response.settings) {
+    //         /* Выбранные настройки доступа пользователя, если они были запрошены */
+    //       }
+    //     } else {
+    //       /* Пользователь нажал кнопку Отмена в окне авторизации */
+    //     }
+    //   }));
+    // }
+
+    setInfo();
     return this;
   }
 

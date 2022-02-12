@@ -1,6 +1,7 @@
 const koa = require('koa')
 const koaRouter = require('koa-router')// importing Koa-Router
 const bodyParser = require('koa-bodyparser');
+const persons = require("./data/profile.js");
 
 const app = new koa()
 const router = new koaRouter()
@@ -32,6 +33,14 @@ app.use(async (ctx, next) => {
 
 router.get('home', '/', (context) => {
   context.body = "Welcome to my Koa.js Server"
+})
+
+router.get('person', '/person', (context) => {
+  const query = context.query;
+  const person = persons.find(e => e.id === query.id);
+  context.body = {
+    data: person
+  }
 })
 
 router.get('data', '/data', (context) => {
