@@ -12,6 +12,7 @@ import PageFriends from '../pages/page-friends.js';
 import PageProfile from '../pages/page-profile.js';
 import PageDonate from '../pages/page-donate.js';
 import PageSuccess from '../pages/page-success.js';
+import isEqual from '../class/IsEqual.js';
 
 // if ('serviceWorker' in navigator) {
 //   navigator.serviceWorker.register('/service-worker.js')
@@ -64,13 +65,13 @@ main();
 
       const data = await response.json();
 
-      console.log(data);
-
       if (!response.ok) throw new Error(data.message || 'something went wrong in request');
 
       const person = data.data;
 
-      if (locator.storage.get("personInfo") || !person) return;
+      const personInStorage = locator.storage.get("personInfo");
+
+      if ( isEqual(personInStorage, person) || !person) return;
       locator.storage.set("personInfo", person);
     }
 

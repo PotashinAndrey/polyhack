@@ -43,6 +43,24 @@ router.get('person', '/person', (context) => {
   }
 })
 
+router.get('friends', '/friends', (context) => {
+  const query = context.query;
+  const person = persons.find(e => e.id === query.id);
+  const personsFriends = person.friends;
+
+  console.log(personsFriends);
+
+      const friends = persons.filter(e => {
+        const isFriend = personsFriends.includes(+e.id);
+        return isFriend;
+      });
+  console.log(friends);
+
+  context.body = {
+    data: friends
+  }
+})
+
 router.get('data', '/data', (context) => {
   context.body = {
     data: staticData

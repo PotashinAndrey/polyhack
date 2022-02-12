@@ -27,7 +27,7 @@ const style = css`
     font-size: 14px;
     margin-bottom: 10px;
   }
-  #name {
+  #firstName {
     font-size: 18px;
     margin-right: 5px;
   }
@@ -40,7 +40,7 @@ const style = css`
     border-radius: 50px;
     margin-right: 10px;
   }
-  #donateAmount, #stickersCount {
+  #donateAmount, #count {
     margin-left: 5px;
   }
   .flexWrapper {
@@ -69,14 +69,14 @@ const style = css`
           <img id="avatar" />
           <div>
             <div class="flexWrapper flexAlignBaseline">
-              <div id="name"></div>
-              <div id="badge"></div>
+              <div id="firstName"></div>
+              <div id="status"></div>
             </div>
             <div class="flexWrapper">
-              <div>Donated:</div><div id="donateAmount"></div>
+              <div>Donated: </div>&nbsp<div id="donated"></div>
             </div>
             <div class="flexWrapper">
-            <div>Stickers:</div><div id="stickersCount"></div>
+            <div>Stickers:</div><div id="count"></div>
             </div>
           </div>
         </div>
@@ -99,19 +99,19 @@ const style = css`
       const { data } = this.store();
       for (const [key, value] of Object.entries(data)) {
         if (key === 'avatar' ) {
-          updateChildrenAttribute(node, `#${key}`, 'src', value);
-        } else if (key === 'donateAmount') {
-          updateChildrenText(node, `#${key}`, `${value} ${this.declOfNum(value, ['рубль', 'рубля', 'рублей'])}`);
+          updateChildrenAttribute(node, `#${key}`, 'src', `../images/${value}`);
+        } else if (key === 'donated') {
+          updateChildrenText(node, `#${key}`, ` ${value}$`);
         } else {
           updateChildrenText(node, `#${key}`, value);
         }
       }
-      $('#badge', node).style.color = badges[data.badge];
+      $('#status', node).style.color = badges[data.status];
       node.addEventListener('click', (event) => {
         locator.channel.send('drawer-open', {
           page: new PageStickers(this.getFriendStickers()),
           params: {
-            title: `Friend's stickers: ${data.name}`
+            title: `Friend's stickers: ${data.firstName}`
           }
         });
       });
@@ -122,9 +122,9 @@ const style = css`
       const stickers = [];
       const myStickers = this.getMyStickers();
       const stickersArrayCopy = [...stickersArray];
-      let { stickersCount } = this.store().data;
-      stickersCount = stickersCount > stickersArrayCopy.length ? stickersArrayCopy.length : stickersCount;
-      for (let i = 0; i < stickersCount; i++) {
+      let { count } = this.store().data;
+      count = count > stickersArrayCopy.length ? stickersArrayCopy.length : count;
+      for (let i = 0; i < count; i++) {
         const stickerIndex = this.getRandomInRange(0, stickersArrayCopy.length - 1);
         const sticker = stickersArrayCopy[stickerIndex];
         stickersArrayCopy.splice(stickerIndex, 1);

@@ -1,4 +1,5 @@
 import Component, { html, css } from '../class/Component.js';
+import locator from '../script/locator.js';
 import AppList from '../components/app-list.js';
 import AppFriendCard from '../components/app-friend-card.js';
 import AppListItem from '../components/app-list-item.js';
@@ -59,8 +60,8 @@ const style = css`
 /** Friends {PageFriends} @class @ui @component <page-friends />
   * description
   */
-  export default class PageFriends extends Component {
-    static template = html`
+export default class PageFriends extends Component {
+  static template = html`
       <template>
         <style>${style}</style>
         <slot></slot>
@@ -79,18 +80,44 @@ const style = css`
     * @param {ShadowRoot} node корневой узел элемента
     * @return {PageFriends} #this текущий компонент
     */
-    mount(node) {
-      super.mount(node, attributes, properties);
-      const { store } = this.store();
+  mount(node) {
+    super.mount(node, attributes, properties);
+
+    const info = locator.storage.get("personInfo");
+
+    const getFriends = async () => {
+      let friends = [];
+
+      const response = await fetch(`/api/friends?id=${info.id}`, {
+        method: "GET",
+        body: null,
+        headers: {}
+      });
+
+      const data = await response.json();
+      const friendsFromData = data.data;
+
+      if (!friendsFromData) {
+        friends = [];
+        return;
+      };
+
+      friends = friendsFromData;
+      locator.storage.set("friends", friendsFromData);
+
       const list = $('app-list', node);
-      for (let i = 0; i < friendList.length; i++) {
+      for (let i = 0; i < friends.length; i++) {
         const listItem = new AppListItem();
-        const friendCard = new AppFriendCard(friendList[i]);
+        const friendCard = new AppFriendCard(friends[i]);
         listItem.append(friendCard);
         list.append(listItem);
       }
-      return this;
     }
+
+    getFriends();
+
+    return this;
   }
+}
 
 Component.init(PageFriends, 'page-friends', { attributes, properties });
