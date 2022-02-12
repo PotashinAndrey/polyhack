@@ -3,7 +3,7 @@ import AppSticker from '../components/app-sticker.js';
 import AppSocial from '../components/app-social.js';
 import AppButton from '../components/app-button.js';
 import $, { updateChildrenText } from '../class/DOM.js';
-
+import locator from '../script/locator.js';
 const attributes = {};
 const properties = {};
 
@@ -37,9 +37,6 @@ const style = css`
     border-radius: 10px;
     box-shadow: 0 2px 5px 1px rgb(0 0 0 / 20%);
   }
-  .allStickersBtn .text {
-    color: white;
-  }
   .socialLabel {
     text-align: center;
     margin-bottom: 0px;
@@ -59,15 +56,11 @@ const style = css`
         <div id="sticker"></div>
         <slot></slot>
         <div class="text">Share with your friends!</div>
-        <app-button secondary wide class="allStickersBtn" id="camera-access">
-          <a class="text" href="#main/stickers">
+        <app-button secondary wide class="allStickersBtn" id="toCollection">
             My stickers collection
-          </a>
         </app-button>
-        <app-button primary wide class="allStickersBtn" id="camera-access">
-          <a class="text" href="#">
+        <app-button primary wide class="allStickersBtn" id="donateMore">
             Donate more
-          </a>
         </app-button>
         <p class="socialLabel">Share in social media</p>
         <app-social class="social"></app-social>
@@ -98,10 +91,14 @@ const style = css`
         });
         $('#sticker', node).appendChild(sticker);
       });
+
+      node.getElementById('toCollection').addEventListener('click', (event) => {
+        locator.go('main/stickers');
+      });
+      node.getElementById('donateMore').addEventListener('click', (event) => {
+        locator.go('main/camera');
+      });
       return this;
     }
-
-
-  }
-
+}
 Component.init(PageSuccess, 'page-success', { attributes, properties });

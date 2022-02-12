@@ -8,15 +8,18 @@ const properties = {};
 
 const style = css`
   .a__icon {
-    color: red;
+    filter: invert(58%) sepia(62%) saturate(7480%) hue-rotate(330deg) brightness(102%) contrast(87%);
     width: 48px;
     height: 48px;
+  }
+  .active .a__icon {
+    filter: invert(100%) sepia(0%) saturate(1%) hue-rotate(122deg) brightness(106%) contrast(101%);
   }
   a svg {
     display: block;
   }
   .active {
-    --gradient: var(--secondary-btn-gradient);
+    --gradient: var(--main-btn-gradient);
     background: linear-gradient(var(--gradient)) !important;
     color: white !important;
   }
@@ -38,12 +41,12 @@ const style = css`
     color: black;
   }
   .menuItem:focus {
-    --gradient: var(--secondary-btn-gradient);
+    --gradient: var(--main-btn-gradient);
     background: linear-gradient(var(--gradient));
     color: white;
   }
   .menuItem:active {
-    --gradient: var(--secondary-btn-gradient);
+    --gradient: var(--main-btn-gradient);
     background: linear-gradient(var(--gradient));
     color: white;
   }

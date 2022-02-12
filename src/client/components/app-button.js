@@ -20,10 +20,10 @@ const style = css`
   }
   :host([secondary]) {
     --color: var(--bell-white);
-    --font-color: var(--bell-white);
+    --font-color: var(--bell-red);
     --color-hover: var(--ligth-gray2);
     --border-color: var(--bell-gray);
-    --gradient: var(--secondary-btn-gradient);
+    --gradient: var(--bell-white);
   }
   :host([icon]) {
     --color: var(--bell-white);
@@ -43,10 +43,11 @@ const style = css`
     color: var(--font-color);
     padding: 10px 20px;
     border-radius: var(--round-radius);
-    font-size: 14px;
+    font-size: 18px;
     border: none;
     background: linear-gradient(var(--gradient));
     width: var(--width);
+    box-shadow: var(--shadow);
   }`;
 
 /** Дефолтная кнопка {Button} @class @ui @component <app-button />

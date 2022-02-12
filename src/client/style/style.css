@@ -4,7 +4,7 @@
 }
 
 :root {
-  --bell-red: #ec006e;
+  --bell-red: #ef485d;
   --bell-dark-red: #c40265;
   --bell-pink: #fce4ee;
   --bell-green: rgb(201, 210, 0);
@@ -17,8 +17,9 @@
   --ligth-gray: #ccc;
   --ligth-gray2: #ededed;
   --sticker-card-color: var(--ligth-gray);
-  --main-btn-gradient: 90.29deg, #1962C4 0.28%, #7654FF 100%;
+  --main-btn-gradient: 90.29deg, #ef485d 0.28%, #ff1837 100%;
   --secondary-btn-gradient: 89.93deg, #9829FF 0.05%, #911DFE 0.06%, #D429FF 160.09%;
+  --shadow: 0 2px 5px 1px rgb(0 0 0 / 20%);
 
   --font: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Ubuntu", "Helvetica Neue", sans-serif;

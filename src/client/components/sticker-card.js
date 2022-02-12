@@ -94,7 +94,7 @@ const style = css`
 
       if (sticker.paused) {
         const donateInfo = document.createElement('div');
-        donateInfo.innerText = "Help reserve to maintain wild animals";
+        donateInfo.innerText = "Donate to Banff national park to maintain wild animals";
         donateInfo.classList.add('donateInfo');
         node.appendChild(donateInfo);
       }
@@ -139,7 +139,7 @@ const style = css`
       } else {
         const price = document.createElement("p");
         price.id = "price";
-        price.innerText = "199 р.";
+        price.innerText = "20$";
         node.appendChild(price);
 
         const info = document.createElement("div");
