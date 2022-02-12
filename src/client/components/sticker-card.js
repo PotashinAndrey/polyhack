@@ -26,9 +26,9 @@ const style = css`
     padding: 10px 0px;
     border-radius: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
-    width: 80%;
+    width: 60%;
     margin: auto;
     margin-top: 8px;
   }
