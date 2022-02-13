@@ -59,7 +59,7 @@ export default class PageProfile extends Component {
           <p>Stickers count:</p>
           <p id="count">0</p>
         </div>
-        <app-button primary id="buttonLogout">Logout</app-button>
+        <app-button primary wide id="buttonLogout">Logout</app-button>
       </template>`;
 
   // /** Создание компонента {PageProfile} @constructor
