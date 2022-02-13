@@ -24,7 +24,8 @@ const style = css`
     height: 100%;
   }
   #camera-access {
-    width: 100%;
+    width: 90%;
+    margin: 0 5%;
     position: absolute;
     bottom: 10px;
   }
@@ -35,6 +36,7 @@ const style = css`
   canvas {
     display: block;
     width: 100%;
+    height: 100%;
   }
   slot {
     display: block;

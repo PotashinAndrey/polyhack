@@ -16,7 +16,6 @@ const style = css`
     --font-color: var(--bell-white);
     --color-hover: var(--bell-dark-red);
     --border-color: var(--bell-red);
-    --gradient: var(--main-btn-gradient);
   }
   :host([secondary]) {
     --color: var(--bell-white);
@@ -24,6 +23,7 @@ const style = css`
     --color-hover: var(--ligth-gray2);
     --border-color: var(--bell-gray);
     --gradient: var(--bell-white);
+    background: linear-gradient(var(--gradient));
   }
   :host([icon]) {
     --color: var(--bell-white);
@@ -45,7 +45,6 @@ const style = css`
     border-radius: var(--round-radius);
     font-size: 18px;
     border: none;
-    background: linear-gradient(var(--gradient));
     width: var(--width);
     box-shadow: var(--shadow);
   }`;

@@ -11,6 +11,11 @@ const style = css`
   :host {
     display: block;
     height: 100%;
+    background-image: url("images/cameraBackground.png");
+    background-color: rgba(0,0,0,.3);
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
   }
   slot {
     display: block;
