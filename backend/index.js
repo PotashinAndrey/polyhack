@@ -56,7 +56,7 @@ router.get('sticker', '/sticker', (context) => {
     return isSticker;
   });
 
-  friendsWithSameSticker.unshift();
+  friendsWithSameSticker.shift();
 
   context.body = {
     data: friendsWithSameSticker
