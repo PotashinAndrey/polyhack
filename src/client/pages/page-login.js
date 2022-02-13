@@ -119,7 +119,6 @@ export default class PageLogin extends Component {
         }
         FB.login((loginResponse) => {
           if (loginResponse.status === 'connected') {
-            console.log(loginResponse, 'success');
             document.cookie = `accessToken=${loginResponse.accessToken}`
             locator.go('main');
           } else {

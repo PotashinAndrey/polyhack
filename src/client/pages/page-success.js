@@ -48,8 +48,8 @@ const style = css`
 /** Успешный донат {PageSuccess} @class @ui @component <page-success />
   * description
   */
-  export default class PageSuccess extends Component {
-    static template = html`
+export default class PageSuccess extends Component {
+  static template = html`
       <template>
         <style>${style}</style>
         <div class="text">Congratulations! You did a good deed and got a sticker !</div>
@@ -78,27 +78,48 @@ const style = css`
     * @param {ShadowRoot} node корневой узел элемента
     * @return {PageSuccess} #this текущий компонент
     */
-    mount(node) {
-      super.mount(node, attributes, properties);
+  mount(node) {
+    super.mount(node, attributes, properties);
 
-      // const { store } = this.store();
-      this.addEventListener('component-routing', e => {
-        const location = e?.detail?.options?.location || [];
-        console.log('route', location);
-        const sticker = new AppSticker({
-          id: location[1],
-          paused: false
+    // const { store } = this.store();
+    this.addEventListener('component-routing', e => {
+      const location = e?.detail?.options?.location || [];
+      console.log('route', location);
+      const sticker = new AppSticker({
+        id: location[1],
+        paused: false
+      });
+      $('#sticker', node).appendChild(sticker);
+    });
+
+    node.getElementById('toCollection').addEventListener('click', (event) => {
+      const getInfo = async () => {
+        const id = 1;
+
+        const response = await fetch(`/api/person?id=${id}`, {
+          method: "GET",
+          body: null,
+          headers: {}
         });
-        $('#sticker', node).appendChild(sticker);
-      });
 
-      node.getElementById('toCollection').addEventListener('click', (event) => {
+        const data = await response.json();
+
+        if (!response.ok) throw new Error(data.message || 'something went wrong in request');
+
+        const person = data.data;
+
+        locator.storage.set("personInfo", person);
+
         locator.go('main/stickers');
-      });
-      node.getElementById('donateMore').addEventListener('click', (event) => {
-        locator.go('main/camera');
-      });
-      return this;
-    }
+      }
+
+      getInfo();
+
+    });
+    node.getElementById('donateMore').addEventListener('click', (event) => {
+      locator.go('main/camera');
+    });
+    return this;
+  }
 }
 Component.init(PageSuccess, 'page-success', { attributes, properties });

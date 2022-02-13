@@ -76,6 +76,18 @@ router.post('login', '/login', (context) => {
   context.status = 400;
 })
 
+router.get('buy', '/buy', (context) => {
+  const query = context.query;
+
+  const person = persons.find(e => e.id === query.id);
+  person.stickers.push(+query.sticker[1]);
+
+
+  console.log(persons, person);
+
+    context.status = 200;
+})
+
 app
   .use(router.routes())
   .use(router.allowedMethods())

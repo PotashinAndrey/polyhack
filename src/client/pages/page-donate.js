@@ -327,8 +327,17 @@ export default class PageDonate extends Component {
     // const { store } = this.store();
 
     const proceed = () => {
-      locator.go(`main/success/${this.stickerId}/${this.isStickerPaused}`);
+      const person = locator.storage.get("personInfo")
+
+      const buySticker = async () => {
+        const response = await fetch(`/api/buy?id=${person.id}&sticker=${this.stickerId}`);
+
+        if (response.ok) locator.go(`main/success/${this.stickerId}/${this.isStickerPaused}`);
+      }
+
+      buySticker();
     }
+
 
     const applePay = $('apple-pay-button', node);
     applePay.addEventListener('click', async () => {

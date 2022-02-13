@@ -64,6 +64,7 @@ export default class PageFriends extends Component {
         return;
       };
 
+      // locator.storage.set("friends", friendsFromData);
       friends = friendsFromData;
 
       const list = $('app-list', node);
