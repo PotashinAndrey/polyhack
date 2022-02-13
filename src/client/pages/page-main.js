@@ -60,6 +60,10 @@ export default class PageMain extends Component {
     // 	console.log('main component-routing', e.detail);
     // })
 
+    const access = document.cookie.split(';').find(e => e.includes('accessToken'));
+    console.log("access", access);
+    if (!access) locator.go('login');
+
     locator.channel.on('drawer-open', (cfg) => {
       const { page, params } = cfg;
       const drawer = new AppDrawer(params);

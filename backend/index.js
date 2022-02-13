@@ -6,16 +6,6 @@ const persons = require("./data/profile.js");
 const app = new koa()
 const router = new koaRouter()
 
-const staticData = [{
-  id: 1,
-  reg: new Date().getTime(),
-  lastIn: new Date().getTime()
-}, {
-  id: 2,
-  reg: new Date().getTime(),
-  lastIn: new Date().getTime()
-}];
-
 app.use(bodyParser());
 
 app.use(async (ctx, next) => {
@@ -66,12 +56,25 @@ router.get('sticker', '/sticker', (context) => {
     return isSticker;
   });
 
-  console.log(friendsWithSameSticker);
+  friendsWithSameSticker.unshift();
 
   context.body = {
     data: friendsWithSameSticker
   }
 });
+
+router.post('login', '/login', (context) => {
+  if (context.request.body.name && context.request.body.password) {
+    context.status = 200;
+    context.body = {
+      data: "someToken"
+    }
+
+    return;
+  }
+
+  context.status = 400;
+})
 
 app
   .use(router.routes())

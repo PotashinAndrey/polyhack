@@ -54,8 +54,8 @@ export default class PageLogin extends Component {
         <style>${style}</style>
         <div class="login_form">
           <p>У вас еще нет аккаунта? <a id="gotoRegister">Sign up</a></p>
-          <input class="inputPVP" name="login" value="potashin@ro.ru" placeholder="Введите Ваш email" />
-          <input class="inputPVP" name="password" value="Qwerty12" placeholder="Введите Ваш пароль" />
+          <input id="name" class="inputPVP" name="login" value="potashin@ro.ru" placeholder="Введите Ваш email" />
+          <input id="password" class="inputPVP" name="password" value="Qwerty12" placeholder="Введите Ваш пароль" />
 
           <app-button primary id="button-login">Login</app-button>
           <app-button primary id="button-login-facebook">Login via facebook</app-button>
@@ -73,15 +73,41 @@ export default class PageLogin extends Component {
   mount(node) {
     super.mount(node, attributes, properties);
 
-    $(node).ready(function() {
+    $(node).ready(function () {
       $.ajaxSetup({ cache: true });
-      $.getScript('https://connect.facebook.net/en_US/sdk.js', function(){
+      $.getScript('https://connect.facebook.net/en_US/sdk.js', function () {
         FB.init({
           appId: '460541079084054',
           version: 'v2.7'
         });
         // FB.getLoginStatus((e) => {console.log(e);});
       });
+    });
+
+    const loginBtn = Get('#button-login', node);
+    loginBtn.addEventListener('click', async () => {
+      const inputnName = Get('#name', node);
+      const inputnPassword = Get('#password', node);
+
+      if (!inputnName.value || !inputnPassword.value) return;
+
+      const tokensResponse = await fetch('/api/login', {
+        method:  'POST',
+        body: JSON.stringify({
+          name: inputnName.value,
+          password: inputnPassword.value
+        }),
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+
+      const data = await tokensResponse.json();
+
+      if (!tokensResponse.ok) throw new Error(data.message || 'something went wrong in request');
+
+      document.cookie = `accessToken=${data.data}`
+      locator.go('main');
     });
 
     const facebookLoginBtn = Get('#button-login-facebook', node);
@@ -94,12 +120,12 @@ export default class PageLogin extends Component {
         FB.login((loginResponse) => {
           if (loginResponse.status === 'connected') {
             console.log(loginResponse, 'success');
-            locator.storage.set('authData', loginResponse.authResponse);
+            document.cookie = `accessToken=${loginResponse.accessToken}`
             locator.go('main');
           } else {
             console.log(loginResponse, 'error');
           }
-        }, {scope: 'public_profile,user_friends'});
+        }, { scope: 'public_profile,user_friends' });
       });
     });
 
