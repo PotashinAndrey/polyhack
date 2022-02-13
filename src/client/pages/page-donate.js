@@ -299,7 +299,7 @@ export default class PageDonate extends Component {
           <div id="title">Donate to Banff national park</div>
           <slot></slot>
           <div id="sticker"></div>
-          <div id="price">20$</div>
+          <div id="price">2$</div>
           <div id="description">Help us to raise money and get an animated cat as a gift!</div>
         </div>
         <div id="payments">
@@ -330,7 +330,7 @@ export default class PageDonate extends Component {
       const person = locator.storage.get("personInfo")
 
       const buySticker = async () => {
-        const response = await fetch(`/api/buy?id=${person.id}&sticker=${this.stickerId}`);
+        const response = await fetch(`/api/buy?id=${person.id}&sticker=${this.stickerId}&sum=${2}`);
 
         if (response.ok) locator.go(`main/success/${this.stickerId}/${this.isStickerPaused}`);
       }

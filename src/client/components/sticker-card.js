@@ -104,7 +104,7 @@ const style = css`
 
       if (!sticker.paused) {
         const info = document.createElement("div");
-        info.innerText = "You donated 20$!";
+        info.innerText = "You donated 2$!";
         info.classList.add("donationCount");
         node.appendChild(info);
 
@@ -142,7 +142,7 @@ const style = css`
       } else {
         const price = document.createElement("p");
         price.id = "price";
-        price.innerText = "20$";
+        price.innerText = "2$";
         node.appendChild(price);
 
         const info = document.createElement("div");

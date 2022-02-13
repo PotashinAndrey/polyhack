@@ -81,6 +81,7 @@ router.get('buy', '/buy', (context) => {
 
   const person = persons.find(e => e.id === query.id);
   person.stickers.push(+query.sticker[1]);
+  person.donated = person.donated + (+query?.sum || 0);
 
 
   console.log(persons, person);
