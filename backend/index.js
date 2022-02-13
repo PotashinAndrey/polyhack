@@ -7,22 +7,26 @@ const context = require('koa/lib/context');
 
 const app = new koa()
 const router = new koaRouter()
-const uri = "mongodb+srv://admin:<password>@lambdaclaster.9epms.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://admin:admin@lambdaclaster.9epms.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function mainDB() {
   try {
     await client.connect();
-
-    await listDatabases(client);
   } catch (e) {
     console.error(e);
-  } finally {
-    await client.close();
   }
 }
 
-// mainDB().catch(console.error);
+mainDB();
+
+function toGoodFormat(user) {
+  const newUser = {
+    ...user,
+    id: user._id
+  }
+  return newUser;
+}
 
 app.use(bodyParser());
 
@@ -43,54 +47,51 @@ router.get('home', '/', (context) => {
   context.body = "Welcome to my Koa.js Server"
 })
 
-router.get('person', '/person', (context) => {
+router.get('person', '/person', async (context) => {
   const query = context.query;
-  const person = persons.find(e => e.id === query.id);
+
+  const database = client.db("polyhackDb");
+  const usersColl = database.collection('polyhack');
+  const user = await usersColl.findOne({}, { _id: query.id });
+
+  const newUser = toGoodFormat(user);
+
   context.body = {
-    data: person
+    data: newUser
   }
 })
 
-router.get('friends', '/friends', (context) => {
+router.get('friends', '/friends', async (context) => {
   const query = context.query;
-  const person = persons.find(e => e.id === query.id);
-  const personsFriends = person.friends;
 
-  const friends = persons.filter(e => {
+  const database = client.db("polyhackDb");
+  const usersColl = database.collection('polyhack');
+  const result = await usersColl.find({}, {s: 1}).toArray();
+
+  const users = [...result].map(e => toGoodFormat(e));
+  const user = users.find(e => +e.id === +query.id);
+  const personsFriends = user.friends;
+
+  const friends = users.filter(e => {
     const isFriend = personsFriends.includes(+e.id);
     return isFriend;
-  });
+  })
 
   context.body = {
     data: friends
   }
 })
 
-// router.get('db', '/db', async (context) => {
-//   await client.connect();
-//   await listDatabases(client);
-
-//   const database = client.db("polyhackDb");
-//   const users = database.collection('polyhack');
-//   const user = {
-//     id: "1",
-//     firstName: "Steven",
-//     lastName: "Jobs",
-//     avatar: "Steve_Jobs.jpg",
-//     status: "Good guy",
-//     donated: 56,
-//     stickers: [2, 3, 4, 5],
-//     count: 4,
-//     friends: [2, 3, 4, 5, 6]
-//   };
-//   const res = await users.insertOne(user);
-//   console.log(res);
-// });
-
-router.get('sticker', '/sticker', (context) => {
+router.get('sticker', '/sticker', async (context) => {
   const query = context.query;
 
-  const friendsWithSameSticker = persons.filter(e => {
+  const database = client.db("polyhackDb");
+  const usersColl = database.collection('polyhack');
+  const result = await usersColl.find({}, {s: 1}).toArray();// костыль сраный
+
+  const users = [...result].map(e => toGoodFormat(e));
+
+  const friendsWithSameSticker = users.filter(e => {
     const isSticker = e.stickers.includes(+query.sticker);
     return isSticker;
   });
@@ -115,15 +116,19 @@ router.post('login', '/login', (context) => {
   context.status = 400;
 })
 
-router.get('buy', '/buy', (context) => {
+router.get('buy', '/buy', async (context) => {
   const query = context.query;
 
-  const person = persons.find(e => e.id === query.id);
-  person.stickers.push(+query.sticker[1]);
+  const database = client.db("polyhackDb");
+  const usersColl = database.collection('polyhack');
+  const user = await usersColl.findOne({}, { _id: query.id });
+
+  console.log(user);
+
+  usersColl.updateOne({_id: query.id}, {$set: {stickers: [...user.stickers, (+query.sticker[1])], donated: user.donated + (+query?.sum || 0)}})
+
+  user.stickers.push(+query.sticker[1]);
   person.donated = person.donated + (+query?.sum || 0);
-
-
-  console.log(persons, person);
 
   context.status = 200;
 })
