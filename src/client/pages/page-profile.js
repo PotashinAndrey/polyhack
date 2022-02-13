@@ -111,7 +111,8 @@ export default class PageProfile extends Component {
           });
         }
       });
-      locator.go('login');
+
+      document.cookie = "";
     });
 
     // @ts-ignore
