@@ -1,11 +1,10 @@
 import Component, { html, css } from '../class/Component.js';
 import StickerListItem from '../components/sticker-list-item.js';
 import $ from '../class/DOM.js';
+import locator from '../script/locator.js';
 
 const attributes = {};
 const properties = {};
-
-const stickersArray = ["s6", "s5", "s1", "s3"];
 
 const style = css`
   :host {
@@ -60,9 +59,9 @@ export default class PageStickers extends Component {
       stickers = this.store()?.stickers;
     } else {
       // Это значит, что открываются свои стикеры
-      stickers = stickersArray.map((id) => {
+      stickers = locator.storage.get('personInfo').stickers.map((id) => {
         return {
-          id,
+          id: `s${id}`,
           paused: false
         }
       });

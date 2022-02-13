@@ -57,8 +57,6 @@ const style = css`
       node.getElementById("header").innerText = texts[location] ? texts[location].toUpperCase() : texts.camera.toUpperCase();
       return this;
     }
-
-
   }
 
 Component.init(PageHeader, 'page-header', { attributes, properties });
