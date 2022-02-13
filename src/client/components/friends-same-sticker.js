@@ -17,9 +17,9 @@ const style = css`
   }
   #imgListFriends {
     margin-top: 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-items: center;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
   }
   slot {
     display: block;
@@ -32,9 +32,12 @@ const style = css`
     static template = html`
       <template>
         <style>${style}</style>
-        <div id="counter"></div>
-        <div id="imgListFriends">
-
+        <div id="notEmpty">
+          <div id="counter"></div>
+          <div id="imgListFriends"></div>
+        </div>
+        <div id="empty" style="display: none;">
+          None of your friends has this sticker yet
         </div>
       </template>`;
 
@@ -68,7 +71,12 @@ const style = css`
   
           $("#imgListFriends", node).appendChild(img);
         }
-        $('#counter', node).innerText = `${friends.length} friends already have this sticker:`;
+        if (!friends.length) {
+          $('#notEmpty', node).style.display = 'none';
+          $('#empty', node).style.display = 'block';
+        } else {
+          $('#counter', node).innerText = `${friends.length} friends already have this sticker:`;
+        }
       });
 
       return this;
