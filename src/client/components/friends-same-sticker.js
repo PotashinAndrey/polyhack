@@ -1,6 +1,5 @@
 import Component, { html, css } from '../class/Component.js';
 import $ from '../class/DOM.js';
-import { friendList } from '../pages/page-friends.js';
 
 const attributes = {};
 const properties = {};
@@ -33,7 +32,7 @@ const style = css`
     static template = html`
       <template>
         <style>${style}</style>
-        <div>3 friends already have this sticker:</div>
+        <div id="counter"></div>
         <div id="imgListFriends">
 
         </div>
@@ -44,7 +43,7 @@ const style = css`
     */
     constructor(store) {
       super();
-      this.store({ store });
+      this.store(store);
     }
 
   /** Создание элемента в DOM (DOM доступен) / mount @lifecycle
@@ -53,17 +52,24 @@ const style = css`
     */
     mount(node) {
       super.mount(node, attributes, properties);
+      let { id } = this.store();
 
-      const { store } = this.store();
-
-      for (let i = 0; i < 3; i++) {
-        const img = document.createElement("img")
-        img.src = friendList[i].avatar;
-
-      $("#imgListFriends", node).appendChild(img);
-
-
-      }
+      fetch(`/api/sticker?sticker=${id}`, {
+        method: "GET",
+        body: null,
+        headers: {}
+      }).then(async (response) => {
+        if (!response.ok) return;
+        const friends = (await response.json()).data;
+        const maxFriends = friends.length > 3 ? 3 : friends.length;
+        for (let i = 0; i < maxFriends; i++) {
+          const img = document.createElement("img");
+          img.src = `images/${friends[i].avatar}`;
+  
+          $("#imgListFriends", node).appendChild(img);
+        }
+        $('#counter', node).innerText = `${friends.length} friends already have this sticker:`;
+      });
 
       return this;
     }

@@ -8,44 +8,6 @@ import $ from '../class/DOM.js';
 const attributes = {};
 const properties = {};
 
-export const friendList = [
-  {
-    avatar: '../images/1.jpg',
-    name: 'Kamila',
-    badge: 'Generous',
-    donateAmount: 4312,
-    stickersCount: 6,
-  },
-  {
-    avatar: '../images/2.jpg',
-    name: 'Diana',
-    badge: 'Spectator',
-    donateAmount: 0,
-    stickersCount: 0,
-  },
-  {
-    avatar: '../images/3.jpg',
-    name: '1000-7',
-    badge: 'Spectator',
-    donateAmount: 20,
-    stickersCount: 1,
-  },
-  {
-    avatar: '../images/4.jpg',
-    name: 'Ilya',
-    badge: 'Indifferent',
-    donateAmount: 100,
-    stickersCount: 2,
-  },
-  {
-    avatar: '../images/5.jpg',
-    name: 'Michael',
-    badge: 'Indifferent',
-    donateAmount: 32,
-    stickersCount: 3,
-  }
-];
-
 const style = css`
   :host {
     display: block;
@@ -103,7 +65,6 @@ export default class PageFriends extends Component {
       };
 
       friends = friendsFromData;
-      locator.storage.set("friends", friendsFromData);
 
       const list = $('app-list', node);
       for (let i = 0; i < friends.length; i++) {

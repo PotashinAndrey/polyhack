@@ -119,25 +119,21 @@ const style = css`
     }
 
     getFriendStickers() {
-      const stickers = [];
       const myStickers = this.getMyStickers();
-      const stickersArrayCopy = [...stickersArray];
-      let { count } = this.store().data;
-      count = count > stickersArrayCopy.length ? stickersArrayCopy.length : count;
-      for (let i = 0; i < count; i++) {
-        const stickerIndex = this.getRandomInRange(0, stickersArrayCopy.length - 1);
-        const sticker = stickersArrayCopy[stickerIndex];
-        stickersArrayCopy.splice(stickerIndex, 1);
-        stickers.push({
-          id: sticker,
-          paused: !myStickers.includes(sticker)
+      const friendStickers = [];
+      let { stickers } = this.store().data;
+      for (let i = 0; i < stickers.length; i++) {
+        const id = `s${stickers[i]}`;
+        friendStickers.push({
+          id,
+          paused: !myStickers.includes(id)
         });
       }
-      return stickers;
+      return friendStickers;
     }
 
     getMyStickers() {
-      return ["s6", "s5", "s4", "s3"];
+      return locator.storage.get('personInfo').stickers.map((stickerId) => `s${stickerId}`);
     }
 
     getRandomInRange(min, max) {

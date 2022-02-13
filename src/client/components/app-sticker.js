@@ -21,7 +21,7 @@ const style = css`
 
 const allStickers = {
   "s6": {
-    stickerPath: '/stickers/s5.json',
+    stickerPath: '/stickers/s6.json',
     name: "кошкодевочка"
   },
   "s5": {

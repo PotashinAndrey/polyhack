@@ -108,7 +108,8 @@ const style = css`
         info.classList.add("donationCount");
         node.appendChild(info);
 
-        const sameSticker = new SameSticker();
+        // Выпилить нахуй такое
+        const sameSticker = new SameSticker({id: +sticker.id[1]});
         sameSticker.classList.add("sameStickerBlock");
         node.appendChild(sameSticker);
 
